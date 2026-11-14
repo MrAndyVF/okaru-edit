@@ -1,6 +1,6 @@
 # okaru-edit: compila la rama main del checkout (OKARU_EDIT_REPO, por defecto ~/Projects/okaru-edit).
 pkgname=okaru-edit
-pkgver=1.0.0
+pkgver=1.0.1
 pkgrel=1
 pkgdesc='OKARU (郁): el editor de texto'
 arch=(x86_64)
