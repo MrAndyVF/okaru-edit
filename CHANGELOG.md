@@ -2,6 +2,18 @@
 
 Each version has an English and a Spanish section. / Cada versión tiene una sección en inglés y otra en español.
 
+## [1.0.1] - 2026-11-14
+
+### English
+
+#### Fixes
+- JSON validation no longer triggers a compiler warning (same behavior).
+
+### Español
+
+#### Correcciones
+- La validación de JSON ya no da un aviso del compilador (mismo comportamiento).
+
 ## [1.0.0] - 2026-11-14
 
 ### English

@@ -23,7 +23,7 @@ namespace okaru::editor {
 
     std::optional<Problem> validateJson(std::string_view text) {
       try {
-        (void)nlohmann::ordered_json::parse(text);
+        [[maybe_unused]] const auto document = nlohmann::ordered_json::parse(text); // solo valida
       } catch (const nlohmann::json::parse_error& e) {
         // `byte` es el último carácter leído (desde 1).
         std::string message = e.what();
