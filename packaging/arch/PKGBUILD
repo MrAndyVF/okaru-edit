@@ -1,4 +1,4 @@
-# okaru-edit: compila la rama main del checkout (OKARU_EDIT_REPO, por defecto ~/Projects/okaru-edit).
+# okaru-edit: compila la rama main del checkout (OKARU_EDIT_REPO, por defecto ~/Projects/okaru-project/okaru-edit).
 pkgname=okaru-edit
 pkgver=1.0.1
 pkgrel=1
@@ -11,7 +11,7 @@ _core=$(pacman -Q okaru-core 2>/dev/null | cut -d' ' -f2)
 depends=("okaru-core${_core:+=$_core}")
 makedepends=(meson ninja pkgconf okaru-core tomlplusplus nlohmann-json) # nlohmann-json: la piden las cabeceras del núcleo (okaru-core <= 1.2.4 no la declaraba)
 options=('!debug' '!lto')
-source=("okaru-edit::git+file://${OKARU_EDIT_REPO:-$HOME/Projects/okaru-edit}#branch=main")
+source=("okaru-edit::git+file://${OKARU_EDIT_REPO:-$HOME/Projects/okaru-project/okaru-edit}#branch=main")
 sha256sums=(SKIP)
 
 pkgver() {
