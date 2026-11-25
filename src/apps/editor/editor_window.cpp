@@ -1309,6 +1309,8 @@ namespace okaru::editor {
         .padding = Style::spaceLg * scale,
         .fill = colorSpecFromRole(ColorRole::SurfaceContainerHigh),
         .radius = Style::radiusLg * scale,
+        .border = colorSpecFromRole(ColorRole::Primary), // OKARU: como los paneles
+        .borderWidth = Style::borderWidth,
         .width = std::min(460.0F * scale, width - 32.0F),
     });
     card->addChild(
