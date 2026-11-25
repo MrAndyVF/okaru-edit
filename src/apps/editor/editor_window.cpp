@@ -1148,25 +1148,50 @@ namespace okaru::editor {
         )
     );
     if (!m_recent.empty()) {
-      page->addChild(
-          ui::label({
-              .text = tr("apps.edit.recent"),
-              .fontSize = Style::fontSizeCaption * scale,
-              .fontWeight = FontWeight::SemiBold,
-              .color = colorSpecFromRole(ColorRole::OnSurfaceVariant),
-          })
-      );
+      // Encabezado con «Borrar todo»; cada archivo con su ✕ para quitarlo de la lista (no del disco).
+      auto heading = ui::row({.align = FlexAlign::Center, .gap = Style::spaceSm * scale, .minWidth = 360.0F * scale});
+      heading->addChild(ui::label({
+          .text = tr("apps.edit.recent"),
+          .fontSize = Style::fontSizeCaption * scale,
+          .fontWeight = FontWeight::SemiBold,
+          .color = colorSpecFromRole(ColorRole::OnSurfaceVariant),
+          .flexGrow = 1.0F,
+      }));
+      heading->addChild(ui::button({
+          .text = tr("apps.edit.recent-clear"),
+          .glyph = "trash",
+          .fontSize = Style::fontSizeCaption * scale,
+          .variant = ButtonVariant::Ghost,
+          .onClick =
+              [this] {
+                m_recent.clear();
+                saveState();
+                m_app.requestRebuild();
+              },
+      }));
+      page->addChild(std::move(heading));
       for (const auto& path : m_recent) {
-        page->addChild(
-            ui::button({
-                .text = path.filename().string(),
-                .contentAlign = ButtonContentAlign::Start,
-                .variant = ButtonVariant::Ghost,
-                .tooltip = path.string(),
-                .minWidth = 320.0F * scale,
-                .onClick = [this, path] { (void)openFile(path); },
-            })
-        );
+        auto line = ui::row({.align = FlexAlign::Center, .gap = Style::spaceXs * scale, .minWidth = 360.0F * scale});
+        line->addChild(ui::button({
+            .text = path.filename().string(),
+            .contentAlign = ButtonContentAlign::Start,
+            .variant = ButtonVariant::Ghost,
+            .tooltip = path.string(),
+            .flexGrow = 1.0F,
+            .onClick = [this, path] { (void)openFile(path); },
+        }));
+        line->addChild(ui::button({
+            .glyph = "x",
+            .variant = ButtonVariant::Ghost,
+            .tooltip = tr("apps.edit.recent-remove"),
+            .onClick =
+                [this, path] {
+                  std::erase(m_recent, path);
+                  saveState();
+                  m_app.requestRebuild();
+                },
+        }));
+        page->addChild(std::move(line));
       }
     }
     return page;
@@ -1309,6 +1334,8 @@ namespace okaru::editor {
         .padding = Style::spaceLg * scale,
         .fill = colorSpecFromRole(ColorRole::SurfaceContainerHigh),
         .radius = Style::radiusLg * scale,
+        .border = colorSpecFromRole(ColorRole::Primary), // OKARU: como los paneles
+        .borderWidth = Style::borderWidth,
         .width = std::min(460.0F * scale, width - 32.0F),
     });
     card->addChild(
