@@ -92,7 +92,9 @@
         "lua": "Lua",
         "kdl": "KDL",
         "csv": "CSV"
-      }
+      },
+      "recent-clear": "Borrar todo",
+      "recent-remove": "Quitar de recientes"
     }
   }
 }
